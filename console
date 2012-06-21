@@ -1,0 +1,15 @@
+<?php
+require 'vendor/autoload.php';
+
+$app = new \Cilex\Application('Pazure');
+
+$app->command(new \Pazure\Command\Certificates\ListCommand());
+$app->command(new \Pazure\Command\Certificates\AddCommand());
+$app->command(new \Pazure\Command\Certificates\GetCommand());
+$app->command(new \Pazure\Command\Certificates\DeleteCommand());
+
+$app->command(new \Pazure\Command\Locations\ListCommand());
+
+$app->register(new \Cilex\Provider\GuzzleServiceProvider(), array('guzzle.configs' => __DIR__.'/webservices.xml'));
+
+$app->run();
