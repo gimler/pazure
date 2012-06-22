@@ -25,8 +25,7 @@ class GuzzleServiceProvider implements ServiceProviderInterface
 {
     public function register(Application $app)
     {
-        $app['guzzle'] = $app->share(function () use ($app)
-        {
+        $app['guzzle'] = $app->share(function () use ($app) {
             $serviceBuilder = ServiceBuilder::factory($app['guzzle.configs']);
 
             return $serviceBuilder;

@@ -17,7 +17,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Cilex\Command\Command;
 
 /**
- * The List Storage Accounts operation lists the storage accounts available under the current subscription. 
+ * The List Storage Accounts operation lists the storage accounts available under the current subscription.
  *
  * @author Gordon Franke <info@nevalon.de>
  */

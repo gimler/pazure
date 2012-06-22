@@ -77,7 +77,7 @@ class CreateCommand extends Command
         } else {
             $storageAccountConfig->addChild('Location', $input->getOption('location'));
         }
-        $storageAccountConfig->addChild('GeoReplicationEnabled', true === $input->getOption('disable_geo_replication') ? 'false':'true'); 
+        $storageAccountConfig->addChild('GeoReplicationEnabled', true === $input->getOption('disable_geo_replication') ? 'false':'true');
         //TODO: add extended properties
 
         $command = $this->getService('guzzle')

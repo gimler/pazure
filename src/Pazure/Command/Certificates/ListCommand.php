@@ -68,7 +68,8 @@ class ListCommand extends Command
     }
 
     //TODO: move to global helper service
-    function der2pem($der_data) {
+    public function der2pem($der_data)
+    {
         $pem = chunk_split(base64_encode($der_data), 64, "\n");
         $pem = "-----BEGIN CERTIFICATE-----\n".$pem."-----END CERTIFICATE-----\n";
 

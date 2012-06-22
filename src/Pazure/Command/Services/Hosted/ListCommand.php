@@ -17,7 +17,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Cilex\Command\Command;
 
 /**
- * The List Hosted Services operation lists the hosted services available under the current subscription. 
+ * The List Hosted Services operation lists the hosted services available under the current subscription.
  *
  * @author Gordon Franke <info@nevalon.de>
  */

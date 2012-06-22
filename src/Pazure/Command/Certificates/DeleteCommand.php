@@ -19,7 +19,7 @@ use Cilex\Command\Command;
 
 use Guzzle\Http\Exception\ClientErrorResponseException;
 
-use Exception; 
+use Exception;
 
 /**
  * Deletes a certificate from the list of management certificates.
