@@ -4,7 +4,6 @@ require 'vendor/autoload.php';
 $app = new \Cilex\Application('Pazure');
 
 $app->command(new \Pazure\Command\Certificates\ListCommand());
-$app->command(new \Pazure\Command\Certificates\AddCommand());
 $app->command(new \Pazure\Command\Certificates\GetCommand());
 $app->command(new \Pazure\Command\Certificates\DeleteCommand());
 
