@@ -10,6 +10,10 @@ $app->command(new \Pazure\Command\Certificates\DeleteCommand());
 
 $app->command(new \Pazure\Command\Locations\ListCommand());
 
+$app->command(new \Pazure\Command\Services\Storage\ListCommand());
+
+$app->command(new \Pazure\Command\Services\Hosted\ListCommand());
+
 $app->register(new \Cilex\Provider\GuzzleServiceProvider(), array('guzzle.configs' => __DIR__.'/webservices.xml'));
 
 $app->run();
