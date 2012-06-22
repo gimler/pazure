@@ -49,14 +49,12 @@ class GetCommand extends Command
         
         $operation = $command->execute();
 
-echo (string) $command->getResponse();
-
         $output->writeln(sprintf('<comment>Id: %s</comment>', $operation->ID));
 
-        if (isset($certificate->Error)) {
+        if (isset($operation->Error)) {
             $output->writeln('Error:');
             $output->writeln(sprintf('  Code: %s', $operation->Error->Code));
-            $output->writeln(sprintf('  Message: %s', $opertation->Error->Message));
+            $output->writeln(sprintf('  Message: %s', $operation->Error->Message));
         } else {
             $output->writeln(sprintf('Status: %s', $operation->Status));
         }
