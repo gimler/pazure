@@ -10,7 +10,10 @@ $app->command(new \Pazure\Command\Certificates\DeleteCommand());
 
 $app->command(new \Pazure\Command\Locations\ListCommand());
 
+$app->command(new \Pazure\Command\Operations\GetCommand());
+
 $app->command(new \Pazure\Command\Services\Storage\ListCommand());
+$app->command(new \Pazure\Command\Services\Storage\CreateCommand());
 
 $app->command(new \Pazure\Command\Services\Hosted\ListCommand());
 

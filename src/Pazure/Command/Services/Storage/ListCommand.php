@@ -55,7 +55,11 @@ class ListCommand extends Command
             );
             foreach ($properties as $key => $text) {
                 if (isset($storageAccount->StorageServiceProperties->$key)) {
-                    $output->writeln(sprintf('  %s: %s', $text, $storageAccount->StorageServiceProperties->$key));
+                    $value = $storageAccount->StorageServiceProperties->$key;
+                    if ('Label' == $key) {
+                        $value = base64_decode($value);
+                    }
+                    $output->writeln(sprintf('  %s: %s', $text, $value));
                 }
             }
 
