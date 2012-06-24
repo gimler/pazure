@@ -1,7 +1,10 @@
+#!/usr/bin/env php
 <?php
 require 'vendor/autoload.php';
 
 $app = new \Cilex\Application('Pazure');
+
+$app->command(new \Pazure\Command\CompileCommand());
 
 $app->command(new \Pazure\Command\Certificates\ListCommand());
 $app->command(new \Pazure\Command\Certificates\GetCommand());
@@ -16,6 +19,13 @@ $app->command(new \Pazure\Command\Services\Storage\CreateCommand());
 
 $app->command(new \Pazure\Command\Services\Hosted\ListCommand());
 
-$app->register(new \Cilex\Provider\GuzzleServiceProvider(), array('guzzle.configs' => __DIR__.'/webservices.xml'));
+#$path = $input->getArgument('path');
+#$filesystem = new Filesystem();
+#if (!$filesystem->isAbsolutePath($path)) {
+#    $path = getcwd().DIRECTORY_SEPARATOR.$path;
+#}
+$path = getcwd().DIRECTORY_SEPARATOR.'/webservices.xml';
+
+$app->register(new \Cilex\Provider\GuzzleServiceProvider(), array('guzzle.configs' => $path));
 
 $app->run();
