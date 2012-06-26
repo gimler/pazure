@@ -32,7 +32,7 @@ class DeleteCommand extends Command
     {
         $this
             ->setName('services:storage:delete')
-            ->setDescription('Delete Storage Account')
+            ->setDescription('Delete storage service account')
             ->setDefinition(array(
                 new InputArgument(
                     'service_name', InputArgument::REQUIRED
@@ -52,12 +52,13 @@ class DeleteCommand extends Command
             $result = $command->execute();
         } catch (ClientErrorResponseException $e) {
             if (404 === $e->getResponse()->getStatusCode()) {
-                throw new Exception(sprintf('Invalid storage account `%s`', $serviceName));
+                throw new Exception(sprintf('Invalid storage service account `%s`', $serviceName));
             }
 
             throw $e;
         }
 
-        $output->writeln(sprintf('<info>Successfully delete storage account `%s`</info>', $serviceName));
+        $output->writeln(sprintf('<comment>Delete storage service account ``</comment>', $serviceName));
+        $output->writeln(sprintf('Request id: %s', $command->getResponse()->getHeader('x-ms-request-id')));
     }
 }

@@ -32,7 +32,7 @@ class GetCommand extends Command
     {
         $this
             ->setName('managment:certificates:get')
-            ->setDescription('Get Management Certificate')
+            ->setDescription('Get management certificate')
             ->setDefinition(array(
                 new InputArgument(
                     'thumbprint', InputArgument::REQUIRED
@@ -42,15 +42,17 @@ class GetCommand extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
+        $thumbprint = $input->getArgument('thumbprint');
+
         $command = $this->getService('guzzle')
             ->get('azure')
-            ->getCommand('certificates.get', array('thumbprint' => $input->getArgument('thumbprint')));
+            ->getCommand('certificates.get', array('thumbprint' => $thumbprint));
 
         try {
             $certificate = $command->execute();
         } catch (ClientErrorResponseException $e) {
             if (404 === $e->getResponse()->getStatusCode()) {
-                throw new Exception($e->getResponse());
+                throw new Exception(sprintf('Invalid certificate thumbprint `%s`', $thumbprint));
             }
 
             throw $e;

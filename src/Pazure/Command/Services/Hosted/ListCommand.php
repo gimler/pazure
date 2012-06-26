@@ -27,7 +27,7 @@ class ListCommand extends Command
     {
         $this
             ->setName('services:hosted:list')
-            ->setDescription('List hosted services');
+            ->setDescription('List hosted services accounts');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
@@ -38,31 +38,30 @@ class ListCommand extends Command
         $hostedAccounts = $command->execute();
 
         if (empty($hostedAccounts)) {
-            $output->writeln('<error>No hosted accounts found.</error>');
+            $output->writeln('<error>No hosted service accounts found.</error>');
         } else {
+            foreach ($hostedAccounts as $hostedAccount) {
+                $output->writeln(sprintf('<comment>Service name: %s</comment>', $hostedAccount->ServiceName));
+                $output->writeln(sprintf('Url: %s', $hostedAccount->Url));
 
-        foreach ($hostedAccounts as $hostedAccount) {
-            $output->writeln(sprintf('<comment>Service name: %s</comment>', $hostedAccount->ServiceName));
-            $output->writeln(sprintf('Url: %s', $hostedAccount->Url));
-
-            $output->writeln('Properties:');
-            $properties = array(
-                'Description'      => 'Description',
-                'AffinityGroup'    => 'Affinity group',
-                'Location'         => 'Location',
-                'Label'            => 'Label',
-                'Status'           => 'Status',
-                'DateCreated'      => 'Created',
-                'DateLastModified' => 'Last modified'
-            );
-            foreach ($properties as $key => $text) {
-                if (isset($hostedAccount->HostedServiceProperties->$key)) {
-                    $output->writeln(sprintf('  %s: %s', $text, $hostedAccount->HostedServiceProperties->$key));
+                $output->writeln('Properties:');
+                $properties = array(
+                    'Description'      => 'Description',
+                    'AffinityGroup'    => 'Affinity group',
+                    'Location'         => 'Location',
+                    'Label'            => 'Label',
+                    'Status'           => 'Status',
+                    'DateCreated'      => 'Created',
+                    'DateLastModified' => 'Last modified'
+                );
+                foreach ($properties as $key => $text) {
+                    if (isset($hostedAccount->HostedServiceProperties->$key)) {
+                        $output->writeln(sprintf('  %s: %s', $text, $hostedAccount->HostedServiceProperties->$key));
+                    }
                 }
-            }
 
-            $output->writeln('');
-        }
+                $output->writeln('');
+            }
         }
     }
 }

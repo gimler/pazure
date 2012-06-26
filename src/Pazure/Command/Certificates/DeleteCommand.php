@@ -32,7 +32,7 @@ class DeleteCommand extends Command
     {
         $this
             ->setName('managment:certificates:delete')
-            ->setDescription('Delete Management Certificate')
+            ->setDescription('Delete management certificate')
             ->setDefinition(array(
                 new InputArgument(
                     'thumbprint', InputArgument::REQUIRED
@@ -42,20 +42,23 @@ class DeleteCommand extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
+        $thumbprint = $input->getArgument('thumbprint');
+
         $command = $this->getService('guzzle')
             ->get('azure')
-            ->getCommand('certificates.delete', array('thumbprint' => $input->getArgument('thumbprint')));
+            ->getCommand('certificates.delete', array('thumbprint' => $thumbprint));
 
         try {
             $result = $command->execute();
         } catch (ClientErrorResponseException $e) {
             if (404 === $e->getResponse()->getStatusCode()) {
-                throw new Exception('Invalid certificate thumbprint');
+                throw new Exception(sprintf('Invalid certificate thumbprint `%s`', $thumbprint));
             }
 
             throw $e;
         }
 
-        $output->writeln('<info>Successfully delete certificate</info>');
+        $output->writeln(sprintf('<comment>Delete managment certificate `%s`</comment>', $thumbprint));
+        $output->writeln(sprintf('Request id: %s', $command->getResponse()->getHeader('x-ms-request-id')));
     }
 }

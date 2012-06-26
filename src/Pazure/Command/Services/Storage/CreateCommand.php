@@ -29,7 +29,7 @@ class CreateCommand extends Command
     {
         $this
             ->setName('services:storage:create')
-            ->setDescription('Create storage account')
+            ->setDescription('Create storage service account')
             ->setDefinition(array(
                 new InputArgument(
                     'service_name', InputArgument::REQUIRED, 'A service name for the storage account that is unique within Windows Azure.'
@@ -58,6 +58,8 @@ class CreateCommand extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
+        $serviceName = $input->getArgument('service_name');
+
         //TODO: validation check Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only.
         //TODO: validation The name may be up to 100 characters in length
         //TODO: validation description the description may be up to 1024 characters in length.
@@ -67,7 +69,7 @@ class CreateCommand extends Command
         //TODO: validation each extended property value has a maximum length of 255 characters
 
         $storageAccountConfig = new \SimpleXMLElement('<?xml version="1.0" encoding="utf-8"?><CreateStorageServiceInput xmlns="http://schemas.microsoft.com/windowsazure"></CreateStorageServiceInput>');
-        $storageAccountConfig->addChild('ServiceName', $input->getArgument('service_name'));
+        $storageAccountConfig->addChild('ServiceName', $serviceName);
         if (null !== $description = $input->getOption('description')) {
             $storageAccountConfig->addChild('Description', $description);
         }
@@ -84,9 +86,9 @@ class CreateCommand extends Command
             ->get('azure')
             ->getCommand('services.storage.create', array('data' => $storageAccountConfig->asXML()));
 
-        $storageAccounts = $command->execute();
+        $command->execute();
 
-        $output->writeln(sprintf('<comment>Storage account</comment>'));
+        $output->writeln(sprintf('<comment>Create storage service account `%s`</comment>', $serviceName));
         $output->writeln(sprintf('Request id: %s', $command->getResponse()->getHeader('x-ms-request-id')));
     }
 }

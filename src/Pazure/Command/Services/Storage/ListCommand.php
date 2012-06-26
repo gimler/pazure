@@ -27,7 +27,7 @@ class ListCommand extends Command
     {
         $this
             ->setName('services:storage:list')
-            ->setDescription('List storage accounts');
+            ->setDescription('List storage service accounts');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
@@ -38,32 +38,32 @@ class ListCommand extends Command
         $storageAccounts = $command->execute();
 
         if (empty($storageAccounts)) {
-            $output->writeln('<error>No storage accounts found.</error>');
-        }
+            $output->writeln('<error>No storage service accounts found.</error>');
+        } else {
+            foreach ($storageAccounts as $storageAccount) {
+                $output->writeln(sprintf('<comment>Service name: %s</comment>', $storageAccount->ServiceName));
+                $output->writeln(sprintf('Url: %s', $storageAccount->Url));
 
-        foreach ($storageAccounts as $storageAccount) {
-            $output->writeln(sprintf('<comment>Service name: %s</comment>', $storageAccount->ServiceName));
-            $output->writeln(sprintf('Url: %s', $storageAccount->Url));
-
-            $output->writeln('Properties:');
-            $properties = array(
-                'Description'  => 'Description',
-                'AffinityGroup' => 'Affinity group',
-                'Location'  => 'Location',
-                'Label'  => 'Label',
-                'Status'  => 'Status',
-            );
-            foreach ($properties as $key => $text) {
-                if (isset($storageAccount->StorageServiceProperties->$key)) {
-                    $value = $storageAccount->StorageServiceProperties->$key;
-                    if ('Label' == $key) {
-                        $value = base64_decode($value);
+                $output->writeln('Properties:');
+                $properties = array(
+                    'Description'  => 'Description',
+                    'AffinityGroup' => 'Affinity group',
+                    'Location'  => 'Location',
+                    'Label'  => 'Label',
+                    'Status'  => 'Status',
+                );
+                foreach ($properties as $key => $text) {
+                    if (isset($storageAccount->StorageServiceProperties->$key)) {
+                        $value = $storageAccount->StorageServiceProperties->$key;
+                        if ('Label' == $key) {
+                            $value = base64_decode($value);
+                        }
+                        $output->writeln(sprintf('  %s: %s', $text, $value));
                     }
-                    $output->writeln(sprintf('  %s: %s', $text, $value));
                 }
-            }
 
-            $output->writeln('');
+                $output->writeln('');
+            }
         }
     }
 }

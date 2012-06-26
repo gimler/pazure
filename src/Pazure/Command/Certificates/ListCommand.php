@@ -27,7 +27,7 @@ class ListCommand extends Command
     {
         $this
             ->setName('managment:certificates:list')
-            ->setDescription('List Management Certificates');
+            ->setDescription('List management certificates');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
@@ -37,33 +37,37 @@ class ListCommand extends Command
             ->getCommand('certificates.list');
         $certificates = $command->execute();
 
-        foreach ($certificates as $certificate) {
-            //TODO: move to method share with list command
-            $certDer = base64_decode((string) $certificate->SubscriptionCertificateData);
-            $certPem = $this->der2pem($certDer);
-            $certData = openssl_x509_parse($certPem);
+        if (empty($certificates)) {
+            $output->writeln('<error>No managment certificates found.</error>');
+        } else {
+            foreach ($certificates as $certificate) {
+                //TODO: move to method share with list command
+                $certDer = base64_decode((string) $certificate->SubscriptionCertificateData);
+                $certPem = $this->der2pem($certDer);
+                $certData = openssl_x509_parse($certPem);
 
-            //TODO: seperate each entry free line, and bold headline?
-            //TODO: add valid info in green color
-            $output->writeln(sprintf('<comment>Id: %s</comment>', $certificate->SubscriptionCertificateThumbprint));
-            $output->writeln(sprintf('Created: %s', $certificate->Created));
+                //TODO: seperate each entry free line, and bold headline?
+                //TODO: add valid info in green color
+                $output->writeln(sprintf('<comment>Id: %s</comment>', $certificate->SubscriptionCertificateThumbprint));
+                $output->writeln(sprintf('Created: %s', $certificate->Created));
 
-            $properties = array(
-                'C'  => 'Country Name',
-                'ST' => 'State or Province Name',
-                'L'  => 'Locality Name',
-                'O'  => 'Organization Name',
-                'OU' => 'Organizational Unit Name',
-                'CN' => 'Common Name',
-                'emailAddress' => 'E-Mail-Address'
-            );
-            foreach ($properties as $key => $text) {
-                if (isset($certData['subject'][$key])) {
-                    $output->writeln(sprintf('%s: %s', $text, $certData['subject'][$key]));
+                $properties = array(
+                    'C'  => 'Country Name',
+                    'ST' => 'State or Province Name',
+                    'L'  => 'Locality Name',
+                    'O'  => 'Organization Name',
+                    'OU' => 'Organizational Unit Name',
+                    'CN' => 'Common Name',
+                    'emailAddress' => 'E-Mail-Address'
+                );
+                foreach ($properties as $key => $text) {
+                    if (isset($certData['subject'][$key])) {
+                        $output->writeln(sprintf('%s: %s', $text, $certData['subject'][$key]));
+                    }
                 }
-            }
 
-            $output->writeln('');
+                $output->writeln('');
+            }
         }
     }
 

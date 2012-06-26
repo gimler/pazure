@@ -17,6 +17,10 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 use Cilex\Command\Command;
 
+use Guzzle\Http\Exception\ClientErrorResponseException;
+
+use Exception;
+
 /**
  * The Get Operation Status operation returns the status of the specified operation. After calling an asynchronous operation, you can call Get Operation Status to determine whether the operation has succeeded, failed, or is still in progress.
  *
@@ -38,11 +42,21 @@ class GetCommand extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
+        $requestId = $input->getArgument('request_id');
+
         $command = $this->getService('guzzle')
             ->get('azure')
-            ->getCommand('operations.get', array('request_id' => $input->getArgument('request_id')));
+            ->getCommand('operations.get', array('request_id' => $requestId));
 
-        $operation = $command->execute();
+        try {
+            $operation = $command->execute();
+        } catch (ClientErrorResponseException $e) {
+            if (400 === $e->getResponse()->getStatusCode()) {
+                throw new Exception(sprintf('Invalid operation request id `%s`', $requestId));
+            }
+
+            throw $e;
+        }
 
         $output->writeln(sprintf('<comment>Id: %s</comment>', $operation->ID));
 

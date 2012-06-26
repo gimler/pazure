@@ -32,7 +32,7 @@ class DeleteCommand extends Command
     {
         $this
             ->setName('services:hosted:delete')
-            ->setDescription('Delete Hosted Account')
+            ->setDescription('Delete hosted service account')
             ->setDefinition(array(
                 new InputArgument(
                     'service_name', InputArgument::REQUIRED
@@ -52,12 +52,13 @@ class DeleteCommand extends Command
             $result = $command->execute();
         } catch (ClientErrorResponseException $e) {
             if (404 === $e->getResponse()->getStatusCode()) {
-                throw new Exception(sprintf('Invalid hosted account `%s`', $serviceName));
+                throw new Exception(sprintf('Invalid hosted service account `%s`', $serviceName));
             }
 
             throw $e;
         }
 
-        $output->writeln(sprintf('<info>Successfully delete hosted account `%s`</info>', $serviceName));
+        $output->writeln(sprintf('<comment>Delete hosted service account ``</comment>', $serviceName));
+        $output->writeln(sprintf('Request id: %s', $command->getResponse()->getHeader('x-ms-request-id')));
     }
 }
