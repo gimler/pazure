@@ -17,7 +17,6 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 use Cilex\Command\Command;
 
-use Exception;
 use DomDocument;
 
 /**

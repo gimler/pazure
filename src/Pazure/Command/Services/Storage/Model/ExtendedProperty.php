@@ -60,11 +60,13 @@ class ExtendedProperty
         return $this->value;
     }
 
-    public function __toString() {
+    public function __toString()
+    {
         return $this->getDom()->saveXML();
     }
 
-    public function getDOM() {
+    public function getDOM()
+    {
         $domDoc = new DOMDocument();
         $domDoc->loadXML('<ExtendedProperty></ExtendedProperty>');
 

@@ -17,8 +17,6 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 use Cilex\Command\Command;
 
-use Exception;
-
 /**
  * The Get Storage Keys operation returns the primary and secondary access keys for the specified storage account.
  *

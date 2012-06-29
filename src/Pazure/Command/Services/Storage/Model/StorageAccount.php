@@ -138,7 +138,8 @@ class StorageAccount
         return $this->getDom()->saveXML();
     }
 
-    public function getDOM() {
+    public function getDOM()
+    {
         $domDoc = new DOMDocument();
         $domDoc->loadXML('<?xml version="1.0" encoding="utf-8"?><CreateStorageServiceInput xmlns="http://schemas.microsoft.com/windowsazure"></CreateStorageServiceInput>');
         $domRoot = $domDoc->documentElement;
@@ -201,8 +202,7 @@ class StorageAccount
 
     public function isValid(ExecutionContext $context)
     {
-        if ((null !== $this->getLocation() ^ null !== $this->getAffinityGroup()) === 0)
-        {
+        if ((null !== $this->getLocation() ^ null !== $this->getAffinityGroup()) === 0) {
 
         }
     }
