@@ -26,6 +26,7 @@ $app->command(new \Pazure\Command\Operations\GetCommand());
 $app->command(new \Pazure\Command\Services\Storage\ListCommand());
 $app->command(new \Pazure\Command\Services\Storage\CreateCommand());
 $app->command(new \Pazure\Command\Services\Storage\DeleteCommand());
+$app->command(new \Pazure\Command\Services\Storage\KeysCommand());
 
 $app->command(new \Pazure\Command\Services\Hosted\ListCommand());
 $app->command(new \Pazure\Command\Services\Hosted\DeleteCommand());
