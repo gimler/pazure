@@ -1,5 +1,13 @@
 #!/usr/bin/env php
 <?php
+use Symfony\Component\Validator\Mapping\ClassMetadataFactory;
+use Symfony\Component\Validator\Mapping\Loader\AnnotationLoader;
+
+use Doctrine\Common\Annotations\AnnotationReader;
+use Doctrine\Common\Annotations\AnnotationRegistry;
+use Doctrine\Common\Annotations\CachedReader;
+use Doctrine\Common\Cache\ApcCache;
+
 require 'vendor/autoload.php';
 
 $app = new \Cilex\Application('Pazure');
@@ -30,5 +38,19 @@ $app->command(new \Pazure\Command\Services\Hosted\DeleteCommand());
 $path = getcwd().DIRECTORY_SEPARATOR.'/webservices.xml';
 
 $app->register(new \Cilex\Provider\GuzzleServiceProvider(), array('guzzle.configs' => $path));
+$app->register(new \Cilex\Provider\ValidatorServiceProvider());
+$app['validator.mapping.class_metadata_factory'] = $app->share(function () use ($app)
+{
+    AnnotationRegistry::registerAutoloadNamespace("Symfony\Component\Validator\Constraint", __DIR__."/vendor/symfony/validator");
+
+    $reader = new CachedReader(
+        new AnnotationReader(),
+        new ApcCache(),
+        $debug = true
+    );
+    #$reader new AnnotationReader();
+
+    return new ClassMetadataFactory(new AnnotationLoader($reader));
+});
 
 $app->run();

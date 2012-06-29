@@ -89,7 +89,7 @@ class Compiler
     {
         $iterator = Finder::create()
             ->files()
-            ->exclude(array('tests', 'Tests'))
+            ->exclude(array('tests', 'Tests', 'vendor'))
             ->name('*.php')
             ->in(array('vendor', 'src'));
 
