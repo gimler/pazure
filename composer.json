@@ -18,8 +18,7 @@
         "pazure/guzzle-azure": "dev-master",
         "cilex/cilex": "dev-master",
         "symfony/filesystem": "2.1.*",
-        "symfony/validator": "2.1.*",
-        "doctrine/common": "dev-master"
+        "symfony/validator": "2.1.*"
     },
     "autoload": {
         "psr-0": {
