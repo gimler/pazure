@@ -1,7 +1,7 @@
 Pazure
 ============
 
-Pazure is a command line tool to interact with the Azue API.
+Pazure is a command line tool to interact with the Azure API.
 
 [![Build Status](https://secure.travis-ci.org/gimler/pazure.png?branch=master)](http://travis-ci.org/gimler/pazure)
 
@@ -16,7 +16,7 @@ store it somewhere on your computer.
 
 ### Globally
 
-You can run these commands to easily acces `pazure` from anywhere on your system:
+You can run these commands to easily access `pazure` from anywhere on your system:
 
     $ sudo wget https://github.com/gimler/pazure/raw/master/pazure.phar -O /usr/local/bin/pazure
 
