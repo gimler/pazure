@@ -17,6 +17,7 @@
         "php": ">=5.3.2",
         "pazure/guzzle-azure": "dev-master",
         "cilex/cilex": "dev-master",
+        "cilex/console-service-provider": "dev-master",
         "symfony/filesystem": "2.1.*",
         "symfony/validator": "2.1.*"
     },

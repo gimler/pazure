@@ -1,0 +1,11 @@
+{
+    "services": {
+        "azure": {
+            "class": "\\Guzzle\\Azure\\AzureClient",
+            "params": {
+                "subscription_id": "[your-subscription-id]",
+                "key_path":        "[your-key-path]"
+            }
+        }
+    }
+}

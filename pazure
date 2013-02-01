@@ -37,7 +37,7 @@ $app->command(new \Pazure\Command\Services\Hosted\DeleteCommand());
 #if (!$filesystem->isAbsolutePath($path)) {
 #    $path = getcwd().DIRECTORY_SEPARATOR.$path;
 #}
-$path = getcwd().DIRECTORY_SEPARATOR.'/webservices.xml';
+$path = getcwd().DIRECTORY_SEPARATOR.'services.json';
 
 $app->register(new \Cilex\Provider\GuzzleServiceProvider(), array('guzzle.configs' => $path));
 $app->register(new \Cilex\Provider\ValidatorServiceProvider());

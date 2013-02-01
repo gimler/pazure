@@ -28,6 +28,12 @@ then:
 
     $ sudo chmod a+x /usr/local/bin/pazure
 
+### Define Service
+
+Copy the service definition and add your `subscription_id` and `key_path` see also [Sourcing from a JSON document](http://guzzlephp.org/tour/using_services.html#sourcing-from-a-json-document)
+
+    $ cp services.json.dist services.json
+
 Then, just run `pazure` in order to run pazure
 
 Update

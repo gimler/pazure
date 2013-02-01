@@ -1,2 +1,6 @@
-webservices.xml
+services.json
 vendor
+*.cer
+*.pem
+*.pfx
+composer.lock
