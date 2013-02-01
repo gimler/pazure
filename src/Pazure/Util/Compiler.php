@@ -90,7 +90,7 @@ class Compiler
         $iterator = Finder::create()
             ->files()
             ->exclude(array('tests', 'Tests', 'vendor'))
-            ->name('/.*\.(php|xml)/')
+            ->name('/.*\.(php|json)/')
             ->in(array('vendor', 'src'));
 
         return array_merge(array('LICENSE'), iterator_to_array($iterator));
