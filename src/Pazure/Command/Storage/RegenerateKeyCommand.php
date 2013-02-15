@@ -41,6 +41,11 @@ class RegenerateKeyCommand extends Command
             ));
     }
 
+    /**
+     * @param \Symfony\Component\Console\Input\InputInterface $input
+     * @param \Symfony\Component\Console\Output\OutputInterface $output
+     * @return int|null|void
+     */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $serviceName = $input->getArgument('service_name');
@@ -58,6 +63,10 @@ class RegenerateKeyCommand extends Command
         $output->writeln(sprintf('Secondary: %s', $storageAccountKeys->StorageServiceKeys->Secondary));
     }
 
+    /**
+     * @param string $keyType
+     * @return \DomDocument
+     */
     protected function buildDom($keyType)
     {
         $domDoc = new DOMDocument();

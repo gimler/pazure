@@ -28,6 +28,7 @@ use Exception;
  */
 class DeleteCommand extends Command
 {
+
     protected function configure()
     {
         $this
