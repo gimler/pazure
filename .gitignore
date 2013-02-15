@@ -4,3 +4,4 @@ vendor
 *.pem
 *.pfx
 composer.lock
+.idea
