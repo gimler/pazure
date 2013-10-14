@@ -40,6 +40,13 @@ class GetCommand extends Command
             ));
     }
 
+    /**
+     * @param \Symfony\Component\Console\Input\InputInterface $input
+     * @param \Symfony\Component\Console\Output\OutputInterface $output
+     * @return int|null|void
+     * @throws \Guzzle\Http\Exception\ClientErrorResponseException
+     * @throws \Exception
+     */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $requestId = $input->getArgument('request_id');

@@ -40,6 +40,13 @@ class GetCommand extends Command
             ));
     }
 
+    /**
+     * @param \Symfony\Component\Console\Input\InputInterface $input
+     * @param \Symfony\Component\Console\Output\OutputInterface $output
+     * @return int|null|void
+     * @throws \Guzzle\Http\Exception\ClientErrorResponseException
+     * @throws \Exception
+     */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $thumbprint = $input->getArgument('thumbprint');
@@ -85,6 +92,10 @@ class GetCommand extends Command
     }
 
     //TODO: move to global helper service
+    /**
+     * @param string $der_data
+     * @return string
+     */
     public function der2pem($der_data)
     {
         $pem = chunk_split(base64_encode($der_data), 64, "\n");

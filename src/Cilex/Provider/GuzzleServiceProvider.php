@@ -23,6 +23,11 @@ use Guzzle\Service\Builder\ServiceBuilder;
  */
 class GuzzleServiceProvider implements ServiceProviderInterface
 {
+    /**
+     * register the app
+     *
+     * @param \Cilex\Application $app
+     */
     public function register(Application $app)
     {
         $app['guzzle'] = $app->share(function () use ($app) {
