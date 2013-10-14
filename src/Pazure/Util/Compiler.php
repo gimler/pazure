@@ -23,6 +23,9 @@ use Symfony\Component\Finder\Finder;
  */
 class Compiler
 {
+    /**
+     * @param string $pharFile
+     */
     public function compile($pharFile = 'pazure.phar')
     {
         if (file_exists($pharFile)) {
@@ -67,11 +70,21 @@ class Compiler
         $phar->addFromString('pazure', $content);
     }
 
+    /**
+     * get the stub string
+     *
+     * @return string
+     */
     protected function getStub()
     {
         return "#!/usr/bin/env php\n<?php Phar::mapPhar('pazure.phar'); require 'phar://pazure.phar/pazure'; __HALT_COMPILER();";
     }
 
+    /**
+     * get the license information
+     *
+     * @return string
+     */
     protected function getLicense()
     {
         return '
@@ -85,6 +98,11 @@ class Compiler
      */';
     }
 
+    /**
+     * get the needed files
+     *
+     * @return array
+     */
     protected function getFiles()
     {
         $iterator = Finder::create()

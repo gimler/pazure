@@ -17,55 +17,42 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 use Cilex\Command\Command;
 
-use DomDocument;
-
 /**
- * The Regenerate Keys operation regenerates the primary or secondary access key for the specified storage account.
+ * The Get Storage Keys operation returns the primary and secondary access keys for the specified storage account.
  *
  * @author Gordon Franke <info@nevalon.de>
  */
-class RegenerateKeyCommand extends Command
+class KeysCommand extends Command
 {
     protected function configure()
     {
         $this
-            ->setName('services:storage:regenerate-key')
-            ->setDescription('Regenerate storage service account key')
+            ->setName('services:storage:keys')
+            ->setDescription('List storage service account keys')
             ->setDefinition(array(
                 new InputArgument(
                     'service_name', InputArgument::REQUIRED
-                ),
-                new InputArgument(
-                    'key_type', InputArgument::REQUIRED, 'Specifies which key to regenerate `primary` or `secondary`'
                 )
             ));
     }
 
+    /**
+     * @param \Symfony\Component\Console\Input\InputInterface $input
+     * @param \Symfony\Component\Console\Output\OutputInterface $output
+     * @return int|null|void
+     */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $serviceName = $input->getArgument('service_name');
 
-        $domDoc = $this->buildDom($input->getArgument('key_type'));
-
         $command = $this->getService('guzzle')
             ->get('azure')
-            ->getCommand('services.storage.keys.regenerate', array('service_name' => $serviceName, 'data' => $domDoc->saveXML()));
+            ->getCommand('services.storage.keys', array('service_name' => $serviceName));
         $storageAccountKeys = $command->execute();
 
         $output->writeln(sprintf('<comment>Service name: %s</comment>', $serviceName));
         $output->writeln(sprintf('Url: %s', $storageAccountKeys->Url));
         $output->writeln(sprintf('Primary: %s', $storageAccountKeys->StorageServiceKeys->Primary));
         $output->writeln(sprintf('Secondary: %s', $storageAccountKeys->StorageServiceKeys->Secondary));
-    }
-
-    protected function buildDom($keyType)
-    {
-        $domDoc = new DOMDocument();
-        $domDoc->loadXML('<?xml version="1.0" encoding="utf-8"?><RegenerateKeys xmlns="http://schemas.microsoft.com/windowsazure"></RegenerateKeys>');
-
-        $nameNode = $domDoc->createElement('KeyType', ucfirst($keyType));
-        $domDoc->documentElement->appendChild($nameNode);
-
-        return $domDoc;
     }
 }
