@@ -4,6 +4,7 @@ Pazure
 Pazure is a command line tool to interact with the Azure API.
 
 [![Build Status](https://secure.travis-ci.org/gimler/pazure.png?branch=master)](http://travis-ci.org/gimler/pazure)
+[![Dependency Status](https://www.versioneye.com/user/projects/525fcaff632bac084b000cc3/badge.png)](https://www.versioneye.com/user/projects/525fcaff632bac084b000cc3)
 
 Installation
 ------------
